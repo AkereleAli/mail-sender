@@ -26,12 +26,12 @@ app.post("/send-email", (req, res) => {
   const { email, subject, content } = req.body;
   try {
     if (!email || !subject || !content) throw new Error("invalid credentials");
-
+    const htmlContent = `<html><body><p>${content}</p></body></html>`;
     const mailOptions = {
       from: process.env.G_MAIL,
       to: email,
       subject,
-      text: content,
+      html: htmlContent,
     };
 
     transporter.sendMail(mailOptions, (error, info) => {
